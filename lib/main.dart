@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: .fromSeed(seedColor: Colors.lightBlueAccent),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -108,6 +108,13 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            TextButton.icon(onPressed: (){}, label: const Text('ciao'), icon: const Icon(Icons.import_contacts_outlined),
+              style: ButtonStyle(foregroundColor: WidgetStateProperty.resolveWith((states) {
+                if(states.contains(WidgetState.pressed)){
+                  return Colors.amberAccent;
+                }
+              },))
             ),
           ],
         ),
