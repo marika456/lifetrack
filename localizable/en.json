@@ -5,5 +5,7 @@
   "profile": "Profile",
   "welcome_morning": "Good Morning!",
   "welcome_afternoon": "Good Afternoon!",
-  "welcome_evening": "Good Evening!"
+  "welcome_evening": "Good Evening!",
+  "welcome_to": "Welcome to\n",
+  "start_button": "Let's go!"
 }

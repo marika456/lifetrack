@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:lifetrack/landing_page.dart';
 import 'constants.dart';
 import 'app_localizations.dart';
 import 'home_page.dart';
@@ -14,7 +15,7 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         Locale('it', ''),
         Locale('en', ''),
       ],
-      home: const MainScreen(),
+      home: const LandingPage(),
     );
   }
 }
@@ -45,6 +46,7 @@ class MainScreen extends StatelessWidget {
             title: Text(Constants.APP_NAME),
             bottom: TabBar(
                 tabs: [
+                  //in text chiamiamo il traduttore per mostrare il saluto nella lingua corretta
                   Tab(icon: const Icon(Icons.home), text: AppLocalizations.of(context)!.translate('home')),
                   Tab(icon: const Icon(Icons.lightbulb), text: AppLocalizations.of(context)!.translate('tips')),
                   Tab(icon: const Icon(Icons.person), text: AppLocalizations.of(context)!.translate('profile')),
