@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'app_localizations.dart';
 import 'constants.dart';
 import 'main.dart';
+import 'fitness_plan_page.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -57,7 +58,7 @@ class _LandingPageState extends State<LandingPage> with TickerProviderStateMixin
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Icon(Icons.water_drop, color: Colors.white, size: 30),
+                  Icon(Icons.coffee, color: Colors.white, size: 30),
                   Icon(Icons.restaurant, color: Colors.white, size: 30),
                   Icon(Icons.directions_run, color: Colors.white, size: 30),
                   Icon(Icons.fitness_center, color: Colors.white, size: 30),
@@ -128,7 +129,7 @@ class _LandingPageState extends State<LandingPage> with TickerProviderStateMixin
               onPressed: () {
                 // Passaggio alla MainScreen con Modalità Replace
                 Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const MainScreen()),
+                  MaterialPageRoute(builder: (context) => const FitnessPlanPage()),
                       (route) => false,
                 );
               },

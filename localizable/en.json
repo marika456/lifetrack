@@ -7,5 +7,9 @@
   "welcome_afternoon": "Good Afternoon!",
   "welcome_evening": "Good Evening!",
   "welcome_to": "Welcome to\n",
-  "start_button": "Let's go!"
+  "start_button": "Let's Start!",
+  "fitness_goal_title": "Choose your goal",
+  "lose_weight": "Lose weight",
+  "maintain_weight": "Maintain weight",
+  "gain_weight": "Gain weight"
 }
