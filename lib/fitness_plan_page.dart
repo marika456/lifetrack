@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lifetrack/app_localizations.dart';
+import 'package:lifetrack/profile_setup_page.dart';
 import 'constants.dart';
 
 
@@ -37,6 +38,15 @@ class _FitnessPlanPageState extends State<FitnessPlanPage> with SingleTickerProv
     _controller.dispose();
     super.dispose();
   }
+  
+  void _navigateToSetup(String goal){
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => ProfileSetupPage(userGoal: goal),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +82,9 @@ class _FitnessPlanPageState extends State<FitnessPlanPage> with SingleTickerProv
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   //BOTTONE 1
-                  ElevatedButton(
-                    onPressed: (){},
+                  ElevatedButton.icon(
+                    onPressed: () => _navigateToSetup('lose_weight'),
+                    icon: const Icon(Icons.scale, color: Colors.white, size: 26),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blueAccent,
                       elevation: 6, //intensità ombra
@@ -82,15 +93,16 @@ class _FitnessPlanPageState extends State<FitnessPlanPage> with SingleTickerProv
                         borderRadius: BorderRadius.circular(15), // Bordi arrotondati
                       ),
                     ),
-                    child: Text(AppLocalizations.of(context)!.translate('lose_weight'),
+                    label: Text(AppLocalizations.of(context)!.translate('lose_weight'),
                         style: TextStyle(fontSize: 22, color: Colors.white)
                     ),
                   ),
                   const SizedBox(height: 40),
 
                   //BOTTONE 2
-                  ElevatedButton(
-                    onPressed: () {},
+                  ElevatedButton.icon(
+                    onPressed: () => _navigateToSetup('maintain_weight'),
+                    icon: Icon(Icons.apple, color: Colors.white, size: 26),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blueAccent,
                       elevation: 6,
@@ -99,14 +111,15 @@ class _FitnessPlanPageState extends State<FitnessPlanPage> with SingleTickerProv
                         borderRadius: BorderRadius.circular(15),
                       ),
                     ),
-                    child: Text(AppLocalizations.of(context)!.translate('maintain_weight'),
+                    label: Text(AppLocalizations.of(context)!.translate('maintain_weight'),
                         style: TextStyle(fontSize: 22, color: Colors.white)),
                   ),
                   const SizedBox(height: 40),
 
                   // Bottone 3
-                  ElevatedButton(
-                    onPressed: () {},
+                  ElevatedButton.icon(
+                    onPressed: () => _navigateToSetup('gain_weight'),
+                    icon: Icon(Icons.fitness_center, color: Colors.white, size: 26),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blueAccent,
                       elevation: 6,
@@ -115,7 +128,7 @@ class _FitnessPlanPageState extends State<FitnessPlanPage> with SingleTickerProv
                         borderRadius: BorderRadius.circular(15),
                       ),
                     ),
-                    child: Text(AppLocalizations.of(context)!.translate('gain_weight'),
+                    label: Text(AppLocalizations.of(context)!.translate('gain_weight'),
                         style: TextStyle(fontSize: 22, color: Colors.white)),
                   ),
                 ],
