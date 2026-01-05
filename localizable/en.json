@@ -11,5 +11,13 @@
   "fitness_goal_title": "Choose your goal",
   "lose_weight": "Lose weight",
   "maintain_weight": "Maintain weight",
-  "gain_weight": "Gain weight"
+  "gain_weight": "Gain weight",
+  "setup_title": "Customize your plan for: ",
+  "weight_label": "Weight (kg)",
+  "height_label": "Height (cm)",
+  "age_label": "Age",
+  "gender_label": "Gender",
+  "calculate_button": "Calculate Calories",
+  "male": "Male",
+  "female": "Female"
 }

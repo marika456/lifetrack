@@ -11,5 +11,13 @@
   "fitness_goal_title": "Scegli il tuo obiettivo",
   "lose_weight": "Perdi peso",
   "maintain_weight": "Mantieni peso",
-  "gain_weight": "Prendi peso"
+  "gain_weight": "Prendi peso",
+  "setup_title": "Personalizza il tuo piano per: ",
+  "weight_label": "Peso (kg)",
+  "height_label": "Altezza (cm)",
+  "age_label": "Età",
+  "gender_label": "Sesso",
+  "calculate_button": "Calcola Calorie",
+  "male": "Uomo",
+  "female": "Donna"
 }
