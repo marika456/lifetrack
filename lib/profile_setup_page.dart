@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lifetrack/app_localizations.dart';
+import 'package:lifetrack/main.dart';
+import 'package:lifetrack/user_provider.dart';
 import 'constants.dart';
 
-class ProfileSetupPage extends StatefulWidget {
+class ProfileSetupPage extends ConsumerStatefulWidget {
   final String userGoal; //dentro questa variabile salverò l'obiettivo della schermata precedente
   const ProfileSetupPage({super.key, required this.userGoal});
 
   @override
-  State<ProfileSetupPage> createState() => _ProfileSetupPageState();
+  ConsumerState<ProfileSetupPage> createState() => _ProfileSetupPageState();
 }
 
-class _ProfileSetupPageState extends State<ProfileSetupPage> with SingleTickerProviderStateMixin {
+class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -44,6 +47,45 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> with SingleTickerPr
     _heightController.dispose();
     _ageController.dispose();
     super.dispose();
+  }
+
+  void _saveAndCalculate(){
+    //prendo i dati dai controller
+    double weight=double.tryParse(_weightController.text)  ?? 0;
+    double height = double.tryParse(_heightController.text) ?? 0;
+    int age = int.tryParse(_ageController.text) ?? 0;
+
+    //calcolo il BMR
+    double bmr=(10*weight)+(6.25*height)-(5*age);
+    bmr+=(_selectedGender=='Male') ? 5 : -161;
+
+    //calcolo le calorie in base all'obiettivo
+    int finalCalories;
+    if (widget.userGoal=='lose_weight'){
+      finalCalories=(bmr * 1.2 - 500).toInt();
+    }else if (widget.userGoal=='gain_weight'){
+      finalCalories=(bmr*1.2 + 500).toInt();
+    }else{
+      finalCalories=(bmr * 1.2).toInt();
+    }
+
+    //aggiorno lo stato globale con riverpod
+    ref.read(userProvider.notifier).updateProfile(
+      UserState(
+        goal: widget.userGoal,
+        weight: weight,
+        height: height,
+        age: age,
+        gender: _selectedGender,
+        dailyCalories: finalCalories
+      ),
+    );
+
+    //infine la navigazione alla mainscreen
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => const MainScreen()),
+        (route) => false
+    );
   }
 
 
@@ -147,6 +189,18 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> with SingleTickerPr
                     const SizedBox(height: 40),
 
                     //TASTO CALCOLA CALORIE
+                    ElevatedButton(
+                        onPressed: _saveAndCalculate,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        padding: const EdgeInsets.symmetric(vertical: 18),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(15)),
+                      ),
+                      child: Text(
+                        AppLocalizations.of(context)!.translate('calculate_button'),
+                        style: const TextStyle(fontSize: 20, color: Colors.white),
+                      ),
+                    ),
                   ],
                 ),
               ),

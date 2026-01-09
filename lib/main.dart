@@ -6,10 +6,15 @@ import 'app_localizations.dart';
 import 'home_page.dart';
 import 'profile_page.dart';
 import 'tips_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+      const ProviderScope(
+          child: MyApp()
+      ),
+  );
 }
 
 class MyApp extends StatelessWidget {
