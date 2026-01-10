@@ -41,6 +41,12 @@ class _HomePageState extends ConsumerState<HomePage> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     final userState=ref.watch(userProvider);
 
+    double percentuale = userState.dailyCalories > 0
+        ? (userState.consumedCalories / userState.dailyCalories)
+        : 0.0;
+
+    if (percentuale > 1.0) percentuale = 1.0;
+
     int ora=DateTime.now().hour;
     String chiave;
 
@@ -75,7 +81,7 @@ class _HomePageState extends ConsumerState<HomePage> with SingleTickerProviderSt
                       width: 200,
                       height: 200,
                       child: CircularProgressIndicator(
-                        value: _animation.value,
+                        value: _animation.value * percentuale,
                         strokeWidth: 12,
                         valueColor: const AlwaysStoppedAnimation<Color>(
                             Colors.blueAccent),

@@ -7,14 +7,16 @@ class UserState {
   final int age;
   final String gender;
   final int dailyCalories;
+  final int consumedCalories;
 
   UserState({
-    this.goal = '',
-    this.weight = 0.0,
-    this.height = 0.0,
-    this.age = 0,
-    this.gender = 'Male',
-    this.dailyCalories = 0,
+    required this.goal,
+    required this.weight,
+    required this.height,
+    required this.age,
+    required this.gender,
+    required this.dailyCalories,
+    this.consumedCalories=0,
   });
 
   UserState copyWith({
@@ -24,6 +26,7 @@ class UserState {
     int? age,
     String? gender,
     int? dailyCalories,
+    int? consumedCalories,
   }) {
     return UserState(
       goal: goal ?? this.goal,
@@ -32,15 +35,21 @@ class UserState {
       age: age ?? this.age,
       gender: gender ?? this.gender,
       dailyCalories: dailyCalories ?? this.dailyCalories,
+      consumedCalories: consumedCalories ?? this.consumedCalories,
     );
   }
 }
 
 class UserNotifier extends StateNotifier<UserState> {
-  UserNotifier() : super(UserState());
+  UserNotifier() : super(UserState(goal: '', weight: 0, height: 0, age: 0, gender: '', dailyCalories: 0));
 
   void updateProfile(UserState newUserState) {
     state = newUserState;
+  }
+
+  //metodo che aggiunge le calorie a quelle già esistenti
+  void addCalories(int kcal) {
+    state = state.copyWith(consumedCalories: state.consumedCalories + kcal);
   }
 }
 
