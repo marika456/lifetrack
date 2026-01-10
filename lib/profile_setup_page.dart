@@ -152,7 +152,7 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> with Single
 
                     //TEXTFIELD ETA'
                     TextFormField(
-                      controller: _heightController,
+                      controller: _ageController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.translate('age_label'),
@@ -194,7 +194,7 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> with Single
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blueAccent,
                         padding: const EdgeInsets.symmetric(vertical: 18),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(15)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                       ),
                       child: Text(
                         AppLocalizations.of(context)!.translate('calculate_button'),

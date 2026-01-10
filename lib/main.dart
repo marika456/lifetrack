@@ -50,6 +50,9 @@ class MainScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text(Constants.APP_NAME),
             bottom: TabBar(
+              labelColor: Colors.blueAccent,
+                unselectedLabelColor: Colors.grey,
+                indicatorColor: Colors.blueAccent,
                 tabs: [
                   //in text chiamiamo il traduttore per mostrare il saluto nella lingua corretta
                   Tab(icon: const Icon(Icons.home), text: AppLocalizations.of(context)!.translate('home')),
