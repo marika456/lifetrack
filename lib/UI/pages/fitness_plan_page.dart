@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lifetrack/app_localizations.dart';
-import 'package:lifetrack/profile_setup_page.dart';
-import 'constants.dart';
+import 'package:lifetrack/localization/app_localizations.dart';
+import 'package:lifetrack/UI/pages/profile_setup_page.dart';
+import '../../constants.dart';
 
 
 

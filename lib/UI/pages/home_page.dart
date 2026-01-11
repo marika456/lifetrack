@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lifetrack/app_localizations.dart';
-import 'package:lifetrack/user_provider.dart';
+import 'package:lifetrack/localization/app_localizations.dart';
+import 'package:lifetrack/model/user_provider.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -64,7 +64,7 @@ class _HomePageState extends ConsumerState<HomePage> with SingleTickerProviderSt
           AppLocalizations.of(context)!.translate(chiave),
           style: const TextStyle(fontSize: 34, fontWeight: FontWeight.bold, color: Colors.black54),
         ),
-        centerTitle: false,
+        centerTitle: true,
       ),
       body: Center(
         child: Column(

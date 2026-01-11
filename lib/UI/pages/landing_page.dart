@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'app_localizations.dart';
-import 'constants.dart';
-import 'main.dart';
+import '../../localization/app_localizations.dart';
+import '../../constants.dart';
+import '../../main.dart';
 import 'fitness_plan_page.dart';
 
 class LandingPage extends StatefulWidget {

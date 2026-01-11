@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lifetrack/app_localizations.dart';
+import 'package:lifetrack/localization/app_localizations.dart';
 import 'package:lifetrack/main.dart';
-import 'package:lifetrack/user_provider.dart';
-import 'constants.dart';
+import 'package:lifetrack/model/user_provider.dart';
+import '../../constants.dart';
 
 class ProfileSetupPage extends ConsumerStatefulWidget {
   final String userGoal; //dentro questa variabile salverò l'obiettivo della schermata precedente

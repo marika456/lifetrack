@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:lifetrack/landing_page.dart';
+import 'package:lifetrack/UI/pages/landing_page.dart';
 import 'constants.dart';
-import 'app_localizations.dart';
-import 'home_page.dart';
-import 'profile_page.dart';
-import 'tips_page.dart';
+import 'localization/app_localizations.dart';
+import 'UI/pages/home_page.dart';
+import 'UI/pages/profile_page.dart';
+import 'UI/pages/tips_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
@@ -54,7 +54,7 @@ class MainScreen extends StatelessWidget {
                 unselectedLabelColor: Colors.grey,
                 indicatorColor: Colors.blueAccent,
                 tabs: [
-                  //in text chiamiamo il traduttore per mostrare il saluto nella lingua corretta
+                  //in text chiamo il traduttore per mostrare il saluto nella lingua corretta
                   Tab(icon: const Icon(Icons.home), text: AppLocalizations.of(context)!.translate('home')),
                   Tab(icon: const Icon(Icons.lightbulb), text: AppLocalizations.of(context)!.translate('tips')),
                   Tab(icon: const Icon(Icons.person), text: AppLocalizations.of(context)!.translate('profile')),
