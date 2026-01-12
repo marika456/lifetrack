@@ -19,5 +19,7 @@
   "gender_label": "Gender",
   "calculate_button": "Calculate Calories",
   "male": "Male",
-  "female": "Female"
+  "female": "Female",
+  "search_food": "Search food...",
+  "search_database": "Search in app"
 }

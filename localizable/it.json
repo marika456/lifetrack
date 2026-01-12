@@ -19,5 +19,7 @@
   "gender_label": "Sesso",
   "calculate_button": "Calcola Calorie",
   "male": "Uomo",
-  "female": "Donna"
+  "female": "Donna",
+  "search_food": "Cerca alimenti...",
+  "search_database": "Cerca nella lista"
 }

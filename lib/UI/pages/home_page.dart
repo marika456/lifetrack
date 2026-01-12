@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lifetrack/UI/widgets/food_search.dart';
 import 'package:lifetrack/localization/app_localizations.dart';
 import 'package:lifetrack/model/user_provider.dart';
 
@@ -105,7 +106,18 @@ class _HomePageState extends ConsumerState<HomePage> with SingleTickerProviderSt
         // IL BOTTONE SOTTO IL CERCHIO
         ElevatedButton(
           onPressed: () {
-            // qui devo aggiungere la ricerca del cibo
+            showBottomSheet(
+                context: context,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+                ),
+                builder: (context) => Padding(
+                    padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom,
+                    ),
+                  child: const FoodSearch(),
+                )
+            );
           },
           style: ElevatedButton.styleFrom(
             shape: const CircleBorder(),
