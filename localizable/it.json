@@ -21,5 +21,9 @@
   "male": "Uomo",
   "female": "Donna",
   "search_food": "Cerca alimenti...",
-  "search_database": "Cerca nella lista"
+  "search_database": "Cerca nella lista",
+  "enter_grams": "Inserisci grammi",
+  "cancel": "Annulla",
+  "add": "Aggiungi",
+  "invalid_grams": "Inserisci un numero valido"
 }

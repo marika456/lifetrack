@@ -21,5 +21,9 @@
   "male": "Male",
   "female": "Female",
   "search_food": "Search food...",
-  "search_database": "Search in app"
+  "search_database": "Search in app",
+  "enter_grams": "Enter grams",
+  "cancel": "Cancel",
+  "add": "Add",
+  "invalid_grams": "Invalid grams"
 }

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lifetrack/localization/app_localizations.dart';
+import 'package:lifetrack/model/user_provider.dart';
 import '../../model/food.dart';
 import 'package:lifetrack/model/db_manager.dart';
 
-class FoodSearch extends StatefulWidget {
+class FoodSearch extends ConsumerStatefulWidget {
   const FoodSearch({super.key});
 
   @override
-  State<FoodSearch> createState() => _FoodSearchState();
+  ConsumerState<FoodSearch> createState() => _FoodSearchState();
 }
 
-class _FoodSearchState extends State<FoodSearch> {
+class _FoodSearchState extends ConsumerState<FoodSearch> {
   List<Food> _results = [];
 
   void _onSearchChanged(String query) async {
@@ -25,6 +27,48 @@ class _FoodSearchState extends State<FoodSearch> {
       _results = results;
     });
   }
+
+  void _inserisciGrammi(BuildContext context, Food food){
+    final TextEditingController _grammiController=TextEditingController();
+    final local=AppLocalizations.of(context)!;
+
+    showDialog(
+        context: context,
+        builder: (context){
+          return AlertDialog(
+            title: Text(food.name),
+            content: TextField(
+              controller: _grammiController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: local.translate('enter_grams'),
+                suffixText: "g",
+              ),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(local.translate('cancel')),
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    final double? grammi = double.tryParse(_grammiController.text);
+                    if (grammi != null && grammi >0 ){
+                      final int totalCalories = ((food.caloriePer100g*grammi) / 100).round();
+
+                      ref.read(userProvider.notifier).addCalories(totalCalories);
+
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: Text(local.translate('add'))
+              )
+            ],
+          );
+        }
+    );
+  }//_inserisciGrammi
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +105,7 @@ class _FoodSearchState extends State<FoodSearch> {
                   subtitle: Text("${food.caloriePer100g} kcal/100g"),
                   trailing: const Icon(Icons.add_circle_outline),
                   onTap: () {
-                    print("${food.name}");
+                    _inserisciGrammi(context, food);
                   },
                 );
               },
