@@ -40,10 +40,10 @@ class _HomePageState extends ConsumerState<HomePage> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    final userState=ref.watch(userProvider);
+    final userProfile=ref.watch(userProvider);
 
-    double percentuale = userState.dailyCalories > 0
-        ? (userState.consumedCalories / userState.dailyCalories)
+    double percentuale = userProfile.dailyCalories > 0
+        ? (userProfile.consumedCalories / userProfile.dailyCalories)
         : 0.0;
 
     if (percentuale > 1.0) percentuale = 1.0;
@@ -92,9 +92,14 @@ class _HomePageState extends ConsumerState<HomePage> with SingleTickerProviderSt
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text("${userState.dailyCalories}", style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.bold)),
-                        Text("kcal", style: TextStyle(fontSize: 14))
+                        Text(
+                            "${userProfile.consumedCalories}",
+                            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)
+                        ),
+                        Text(
+                            "di ${userProfile.dailyCalories} kcal",
+                            style: const TextStyle(fontSize: 19, color: Colors.black54)
+                        ),
                       ],
                     ),
                   ],

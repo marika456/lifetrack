@@ -7,6 +7,7 @@ import 'UI/pages/home_page.dart';
 import 'UI/pages/profile_page.dart';
 import 'UI/pages/tips_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lifetrack/model/user_provider.dart';
 
 
 void main() {
@@ -17,12 +18,15 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final userProfile = ref.watch(userProvider);
+
     return MaterialApp(
       title: Constants.APP_NAME,
       localizationsDelegates: [
@@ -34,7 +38,7 @@ class MyApp extends StatelessWidget {
         Locale('it', ''),
         Locale('en', ''),
       ],
-      home: const LandingPage(),
+      home: userProfile.weight == 0 ? const LandingPage() : const MainScreen(),
     );
   }
 }

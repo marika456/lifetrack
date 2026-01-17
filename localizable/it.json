@@ -25,5 +25,6 @@
   "enter_grams": "Inserisci grammi",
   "cancel": "Annulla",
   "add": "Aggiungi",
-  "invalid_grams": "Inserisci un numero valido"
+  "invalid_grams": "Inserisci un numero valido",
+  "edit_profile": "Modifica profilo"
 }

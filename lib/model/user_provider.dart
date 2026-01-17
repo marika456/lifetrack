@@ -1,58 +1,55 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'user_model.dart';
+import 'db_manager.dart';
 
-class UserState {
-  final String goal;
-  final double weight;
-  final double height;
-  final int age;
-  final String gender;
-  final int dailyCalories;
-  final int consumedCalories;
-
-  UserState({
-    required this.goal,
-    required this.weight,
-    required this.height,
-    required this.age,
-    required this.gender,
-    required this.dailyCalories,
-    this.consumedCalories=0,
-  });
-
-  UserState copyWith({
-    String? goal,
-    double? weight,
-    double? height,
-    int? age,
-    String? gender,
-    int? dailyCalories,
-    int? consumedCalories,
-  }) {
-    return UserState(
-      goal: goal ?? this.goal,
-      weight: weight ?? this.weight,
-      height: height ?? this.height,
-      age: age ?? this.age,
-      gender: gender ?? this.gender,
-      dailyCalories: dailyCalories ?? this.dailyCalories,
-      consumedCalories: consumedCalories ?? this.consumedCalories,
-    );
-  }
-}
-
-class UserNotifier extends StateNotifier<UserState> {
-  UserNotifier() : super(UserState(goal: '', weight: 0, height: 0, age: 0, gender: '', dailyCalories: 0));
-
-  void updateProfile(UserState newUserState) {
-    state = newUserState;
+class UserNotifier extends StateNotifier<UserProfile> {
+  UserNotifier() : super(UserProfile(
+      weight: 0,
+      height: 0,
+      age: 0,
+      gender: '',
+      goal: 'maintain',
+      dailyCalories: 2000,
+      consumedCalories: 0,
+      lastUpdate: ''
+  )) {
+    loadProfile();
   }
 
-  //metodo che aggiunge le calorie a quelle già esistenti
-  void addCalories(int kcal) {
+  Future<void> loadProfile() async {
+    try {
+      final data = await DbManager.getUserProfile();
+      final profile = UserProfile.fromMap(data);
+
+      final oggi = DateTime.now().toIso8601String().split('T')[0];
+
+      if (profile.lastUpdate != oggi) {
+        state = profile.copyWith(consumedCalories: 0, lastUpdate: oggi);
+        await DbManager.updateUserProfile(state.toMap());
+      } else {
+        state = profile;
+      }
+    } catch (e) {
+      print("Errore nel caricamento del profilo: $e");
+    }
+  }
+
+  void addCalories(int kcal) async {
     state = state.copyWith(consumedCalories: state.consumedCalories + kcal);
+    await DbManager.updateUserProfile(state.toMap());
+  }
+
+  void updateSetup(UserProfile newProfile) async {
+    state = newProfile;
+    await DbManager.updateUserProfile(state.toMap());
+  }
+
+  void resetCalories() async {
+    state = state.copyWith(consumedCalories: 0);
+    await DbManager.updateUserProfile(state.toMap());
   }
 }
 
-final userProvider = StateNotifierProvider<UserNotifier, UserState>((ref) {
+final userProvider = StateNotifierProvider<UserNotifier, UserProfile>((ref) {
   return UserNotifier();
 });

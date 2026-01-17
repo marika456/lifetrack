@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lifetrack/localization/app_localizations.dart';
 import 'package:lifetrack/main.dart';
+import 'package:lifetrack/model/user_model.dart';
 import 'package:lifetrack/model/user_provider.dart';
 import '../../constants.dart';
 
 class ProfileSetupPage extends ConsumerStatefulWidget {
-  final String userGoal; //dentro questa variabile salverò l'obiettivo della schermata precedente
+  final String userGoal; //dentro questa variabile salvo l'obiettivo della schermata precedente
   const ProfileSetupPage({super.key, required this.userGoal});
 
   @override
@@ -69,15 +70,19 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> with Single
       finalCalories=(bmr * 1.2).toInt();
     }
 
+    final oggi = DateTime.now().toIso8601String().split('T')[0];
+
     //aggiorno lo stato globale con riverpod
-    ref.read(userProvider.notifier).updateProfile(
-      UserState(
+    ref.read(userProvider.notifier).updateSetup(
+      UserProfile(
         goal: widget.userGoal,
         weight: weight,
         height: height,
         age: age,
         gender: _selectedGender,
-        dailyCalories: finalCalories
+        dailyCalories: finalCalories,
+        consumedCalories: ref.read(userProvider).consumedCalories,
+        lastUpdate: oggi,
       ),
     );
 
