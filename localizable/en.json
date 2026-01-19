@@ -26,5 +26,7 @@
   "cancel": "Cancel",
   "add": "Add",
   "invalid_grams": "Invalid grams",
-  "edit_profile": "Edit profile"
+  "edit_profile": "Edit profile",
+  "invalid_field": "Invalid field",
+  "required_field": "Required field"
 }

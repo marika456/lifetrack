@@ -131,6 +131,13 @@ class _HomePageState extends ConsumerState<HomePage> with SingleTickerProviderSt
           ),
           child: const Icon(Icons.add, color: Colors.white, size: 30),
         ),
+          const SizedBox(height: 18),
+          IconButton(
+              onPressed: (){
+                ref.read(userProvider.notifier).resetCalories();
+              },
+              icon: const Icon(Icons.refresh, color: Colors.blueAccent)
+          )
         ],
         ),
       ),

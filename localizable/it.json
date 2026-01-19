@@ -26,5 +26,7 @@
   "cancel": "Annulla",
   "add": "Aggiungi",
   "invalid_grams": "Inserisci un numero valido",
-  "edit_profile": "Modifica profilo"
+  "edit_profile": "Modifica profilo",
+  "invalid_field": "Invalid field",
+  "required_field": "Campo obbligatorio"
 }

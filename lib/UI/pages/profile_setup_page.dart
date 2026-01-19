@@ -15,6 +15,8 @@ class ProfileSetupPage extends ConsumerStatefulWidget {
 }
 
 class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> with SingleTickerProviderStateMixin {
+  final _formKey = GlobalKey<FormState>();
+
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -51,6 +53,10 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> with Single
   }
 
   void _saveAndCalculate(){
+
+    if(!_formKey.currentState!.validate()){
+      return;
+    }
     //prendo i dati dai controller
     double weight=double.tryParse(_weightController.text)  ?? 0;
     double height = double.tryParse(_heightController.text) ?? 0;
@@ -112,6 +118,8 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> with Single
       body: SingleChildScrollView(
         child: Padding(
             padding: const EdgeInsets.all(20),
+          child: Form(
+            key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -140,6 +148,15 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> with Single
                         prefixIcon: const Icon(Icons.scale),
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15))
                       ),
+                      validator: (value){
+                        if(value==null || value.isEmpty) {
+                          return AppLocalizations.of(context)!.translate('required_field');
+                        }
+                        final n=double.tryParse(value);
+                        if (n==null || n < 30 || n > 200 )
+                          return AppLocalizations.of(context)!.translate('invalid_field');
+                        return null;
+                      },
                     ),
                     const SizedBox(height: 40),
 
@@ -152,6 +169,15 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> with Single
                         prefixIcon: const Icon(Icons.height),
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15))
                       ),
+                      validator: (value){
+                        if(value==null || value.isEmpty) {
+                          return AppLocalizations.of(context)!.translate('required_field');
+                        }
+                        final n=double.tryParse(value);
+                        if (n==null || n < 100 || n > 250 )
+                          return AppLocalizations.of(context)!.translate('invalid_field');
+                        return null;
+                      },
                     ),
                     const SizedBox(height: 40),
 
@@ -164,6 +190,15 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> with Single
                           prefixIcon: const Icon(Icons.cake_outlined),
                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(15))
                       ),
+                      validator: (value){
+                        if(value==null || value.isEmpty) {
+                          return AppLocalizations.of(context)!.translate('required_field');
+                        }
+                        final n=double.tryParse(value);
+                        if (n==null || n < 5 || n > 80 )
+                          return AppLocalizations.of(context)!.translate('invalid_field');
+                        return null;
+                      },
                     ),
                     const SizedBox(height: 40),
 
@@ -213,6 +248,7 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> with Single
           ),
         ),
        ),
+    )
     );
   }
 }
