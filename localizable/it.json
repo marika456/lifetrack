@@ -28,5 +28,11 @@
   "invalid_grams": "Inserisci un numero valido",
   "edit_profile": "Modifica profilo",
   "invalid_field": "Invalid field",
-  "required_field": "Campo obbligatorio"
+  "required_field": "Campo obbligatorio",
+  "extra_snack_title": "Energia extra!",
+  "extra_snack_msg": "Hai camminato molto, mangia uno spuntino!",
+  "walk_suggestion_title": "Resta attivo!",
+  "walk_suggestion_msg": "Sei vicino al limite giornaliero, è il momento di una passeggiata!",
+  "generic_tip_title": "Consiglio",
+  "generic_tip_msg": "Continua così!"
 }

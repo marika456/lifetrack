@@ -7,6 +7,7 @@ class UserProfile {
   final int dailyCalories;
   final int consumedCalories;
   final String lastUpdate;
+  final int steps;
 
   UserProfile({
     required this.weight,
@@ -17,6 +18,7 @@ class UserProfile {
     required this.dailyCalories,
     this.consumedCalories = 0,
     required this.lastUpdate,
+    this.steps=0
   });
 
   Map<String, dynamic> toMap() {
@@ -29,6 +31,7 @@ class UserProfile {
       'dailyCalories': dailyCalories,
       'consumedCalories': consumedCalories,
       'lastUpdate': lastUpdate,
+      'steps': steps,
     };
   }
 
@@ -42,6 +45,7 @@ class UserProfile {
       dailyCalories: map['dailyCalories'],
       consumedCalories: map['consumedCalories'],
       lastUpdate: map['lastUpdate'],
+      steps: map['steps']
     );
   }
 
@@ -54,6 +58,7 @@ class UserProfile {
     int? dailyCalories,
     int? consumedCalories,
     String? lastUpdate,
+    int? steps
   }) {
     return UserProfile(
       weight: weight ?? this.weight,
@@ -64,6 +69,7 @@ class UserProfile {
       dailyCalories: dailyCalories ?? this.dailyCalories,
       consumedCalories: consumedCalories ?? this.consumedCalories,
       lastUpdate: lastUpdate ?? this.lastUpdate,
+      steps: steps ?? this.steps
     );
   }
 }

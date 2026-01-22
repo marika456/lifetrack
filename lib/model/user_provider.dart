@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'user_model.dart';
 import 'db_manager.dart';
+import 'package:pedometer/pedometer.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class UserNotifier extends StateNotifier<UserProfile> {
   UserNotifier() : super(UserProfile(
@@ -11,7 +13,8 @@ class UserNotifier extends StateNotifier<UserProfile> {
       goal: 'maintain',
       dailyCalories: 2000,
       consumedCalories: 0,
-      lastUpdate: ''
+      lastUpdate: '',
+      steps: 0
   )) {
     loadProfile();
   }
@@ -24,7 +27,7 @@ class UserNotifier extends StateNotifier<UserProfile> {
       final oggi = DateTime.now().toIso8601String().split('T')[0];
 
       if (profile.lastUpdate != oggi) {
-        state = profile.copyWith(consumedCalories: 0, lastUpdate: oggi);
+        state = profile.copyWith(consumedCalories: 0, steps: 0, lastUpdate: oggi);
         await DbManager.updateUserProfile(state.toMap());
       } else {
         state = profile;
@@ -46,6 +49,28 @@ class UserNotifier extends StateNotifier<UserProfile> {
 
   void resetCalories() async {
     state = state.copyWith(consumedCalories: 0);
+    await DbManager.updateUserProfile(state.toMap());
+  }
+
+  //attivo il sensore
+  void initPedometer() async {
+    //chiede permesso all'utente
+    PermissionStatus status = await Permission.activityRecognition.request();
+
+    if (status.isGranted) {
+      //ascolta lo stream dei passi
+      Pedometer.stepCountStream.listen(
+            (StepCount event) {
+              //aggiorna lo stato e il DB
+          updateSteps(event.steps);
+        },
+        onError: (error) => print("Errore pedometro: $error"),
+      );
+    }
+  }
+
+  void updateSteps(int newSteps) async{
+    state=state.copyWith(steps: newSteps);
     await DbManager.updateUserProfile(state.toMap());
   }
 }

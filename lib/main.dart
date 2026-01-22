@@ -43,8 +43,22 @@ class MyApp extends ConsumerWidget {
   }
 }
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({super.key});
+
+  @override
+  ConsumerState<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends ConsumerState<MainScreen> {
+
+@override
+void initState() {
+  super.initState();
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    ref.read(userProvider.notifier).initPedometer();
+  });
+}
 
   @override
   Widget build(BuildContext context) {

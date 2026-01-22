@@ -37,7 +37,8 @@ class DbManager {
             goal TEXT,
             dailyCalories INTEGER,
             consumedCalories INTEGER,
-            lastUpdate TEXT
+            lastUpdate TEXT,
+            steps INTEGER
           )
       ''');
           //inserimento dei cibi
@@ -57,7 +58,8 @@ class DbManager {
             'goal': 'maintain',
             'dailyCalories': 2000,
             'consumedCalories': 0,
-            'lastUpdate': DateTime.now().toIso8601String().split('T')[0] //salvo la data di oggi
+            'lastUpdate': DateTime.now().toIso8601String().split('T')[0], //salvo la data di oggi
+            'steps': 0
           });
         }
     );
