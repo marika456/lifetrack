@@ -12,7 +12,7 @@ class UserNotifier extends StateNotifier<UserProfile> {
       gender: '',
       goal: 'maintain',
       dailyCalories: 2000,
-      consumedCalories: 0,
+      consumedCalories: 0
       lastUpdate: '',
       steps: 0
   )) {

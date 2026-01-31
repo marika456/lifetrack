@@ -16,7 +16,7 @@ class TipsPage extends ConsumerWidget {
     IconData tipIcon = Icons.lightbulb;
     Color themeColor = Colors.orangeAccent;
 
-    if (user.goal == 'gain_weight' && user.steps > 7000) {
+    if (user.goal == 'gain_weight' && user.steps > 300) {
       tipTitle = local.translate('extra_snack_title');
       tipMessage = local.translate('extra_snack_msg');
       tipIcon = Icons.restaurant;

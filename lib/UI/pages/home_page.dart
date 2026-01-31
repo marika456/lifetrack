@@ -16,15 +16,15 @@ class _HomePageState extends ConsumerState<HomePage> with SingleTickerProviderSt
   late Animation<double> _animation;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
 
-    _animationController=AnimationController(
+    _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 2000),
     );
 
-    _animation=CurvedAnimation(
+    _animation = CurvedAnimation(
       parent: _animationController,
       curve: Curves.easeInOutCubic,
     );
@@ -33,112 +33,138 @@ class _HomePageState extends ConsumerState<HomePage> with SingleTickerProviderSt
   }
 
   @override
-  void dispose(){
+  void dispose() {
     _animationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final userProfile=ref.watch(userProvider);
+    final userProfile = ref.watch(userProvider);
+    final l10n = AppLocalizations.of(context)!;
 
-    double percentuale = userProfile.dailyCalories > 0
-        ? (userProfile.consumedCalories / userProfile.dailyCalories)
-        : 0.0;
+    double percentuale = 0.0;
+    if (userProfile.dailyCalories > 0) {
+      percentuale = (userProfile.consumedCalories / userProfile.dailyCalories).clamp(0.0, 1.0);
+    }
 
-    if (percentuale > 1.0) percentuale = 1.0;
-
-    int ora=DateTime.now().hour;
-    String chiave;
-
-    if (ora<12){
-      chiave="welcome_morning";
-    }else if(ora<18){
-      chiave="welcome_afternoon";
-    }else{
-      chiave="welcome_evening";
+    int ora = DateTime.now().hour;
+    String chiaveSaluto;
+    if (ora < 12) {
+      chiaveSaluto = "welcome_morning";
+    } else if (ora < 18) {
+      chiaveSaluto = "welcome_afternoon";
+    } else {
+      chiaveSaluto = "welcome_evening";
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)!.translate(chiave),
-          style: const TextStyle(fontSize: 34, fontWeight: FontWeight.bold, color: Colors.black54),
+          l10n.translate(chiaveSaluto),
+          style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black54),
         ),
         centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          AnimatedBuilder(
-              animation: _animationController,
-              builder: (context, child) {
-                //CERCHIO PER LE CALORIE
-                return Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    SizedBox(
-                      width: 200,
-                      height: 200,
-                      child: CircularProgressIndicator(
-                        value: _animation.value * percentuale,
-                        strokeWidth: 12,
-                        valueColor: const AlwaysStoppedAnimation<Color>(
-                            Colors.blueAccent),
-                        backgroundColor: Colors.black26,
-                      ),
-                    ),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Bottone Reset
+                IconButton(
+                  onPressed: () => ref.read(userProvider.notifier).resetCalories(),
+                  icon: const Icon(Icons.refresh, color: Colors.blueAccent, size: 30),
+                  tooltip: "Reset",
+                ),
+
+                const SizedBox(height: 20),
+                //CERCHIO
+                AnimatedBuilder(
+                  animation: _animation,
+                  builder: (context, child) {
+                    return Stack(
+                      alignment: Alignment.center,
                       children: [
-                        Text(
-                            "${userProfile.consumedCalories}",
-                            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)
+                        SizedBox(
+                          width: 240,
+                          height: 240,
+                          child: CircularProgressIndicator(
+                            value: _animation.value * percentuale,
+                            strokeWidth: 16,
+                            valueColor: const AlwaysStoppedAnimation<Color>(Colors.blueAccent),
+                            backgroundColor: Colors.black12,
+                            strokeCap: StrokeCap.round,
+                          ),
                         ),
-                        Text(
-                            "di ${userProfile.dailyCalories} kcal",
-                            style: const TextStyle(fontSize: 19, color: Colors.black54)
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "${userProfile.consumedCalories}",
+                              style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "/ ${userProfile.dailyCalories} kcal",
+                              style: const TextStyle(fontSize: 18, color: Colors.black54),
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(Icons.directions_walk, size: 30, color: Colors.orangeAccent),
+                                const SizedBox(width: 4),
+                                Text(
+                                  "${userProfile.steps}",
+                                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ],
-                    ),
-                  ],
-                );
-              },
-          ),
-        const SizedBox(height: 30),
-
-        // IL BOTTONE SOTTO IL CERCHIO
-        ElevatedButton(
-          onPressed: () {
-            showBottomSheet(
-                context: context,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+                    );
+                  },
                 ),
-                builder: (context) => Padding(
-                    padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom,
-                    ),
-                  child: const FoodSearch(),
-                )
-            );
-          },
-          style: ElevatedButton.styleFrom(
-            shape: const CircleBorder(),
-            padding: const EdgeInsets.all(15),
-            backgroundColor: Colors.blueAccent,
+
+                const SizedBox(height: 50),
+
+                //BOTTONE AGGIUNGI
+                ElevatedButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+                      ),
+                      builder: (context) => Padding(
+                        padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom,
+                        ),
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.7,
+                          child: const FoodSearch(),
+                        ),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: const CircleBorder(),
+                    padding: const EdgeInsets.all(24),
+                    backgroundColor: Colors.blueAccent,
+                    elevation: 8,
+                  ),
+                  child: const Icon(Icons.add, color: Colors.white, size: 40),
+                ),
+              ],
+            ),
           ),
-          child: const Icon(Icons.add, color: Colors.white, size: 30),
-        ),
-          const SizedBox(height: 18),
-          IconButton(
-              onPressed: (){
-                ref.read(userProvider.notifier).resetCalories();
-              },
-              icon: const Icon(Icons.refresh, color: Colors.blueAccent)
-          )
-        ],
         ),
       ),
     );

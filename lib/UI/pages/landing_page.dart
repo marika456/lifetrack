@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../localization/app_localizations.dart';
 import '../../constants.dart';
-import '../../main.dart';
 import 'fitness_plan_page.dart';
 
 class LandingPage extends StatefulWidget {
@@ -11,7 +10,7 @@ class LandingPage extends StatefulWidget {
   State<LandingPage> createState() => _LandingPageState();
 }
 
-// Uso il mixin per le animazioni
+
 class _LandingPageState extends State<LandingPage> with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
@@ -20,18 +19,17 @@ class _LandingPageState extends State<LandingPage> with TickerProviderStateMixin
   @override
   void initState() {
     super.initState();
-    // Inizializzo il controller
     _controller = AnimationController(
       duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
-    _controller.forward(); // Avvia l'animazione all'apertura
+    _controller.forward();
   }
 
   @override
   void dispose() {
-    _controller.dispose(); // Libera la memoria
+    _controller.dispose();
     super.dispose();
   }
 
@@ -42,7 +40,7 @@ class _LandingPageState extends State<LandingPage> with TickerProviderStateMixin
         children: [
           // BARRA SUPERIORE
           Container(
-            height: 120,
+            height: 110,
             width: double.infinity,
             decoration: BoxDecoration(
               color: const Color(0xFF0077B6),
@@ -69,20 +67,20 @@ class _LandingPageState extends State<LandingPage> with TickerProviderStateMixin
             ),
           ),
 
-          const SizedBox(height: 30),
+          const SizedBox(height: 10),
 
           // IL TESTO DI BENVENUTO
           Padding(
             padding: const EdgeInsets.only(top: 30, bottom: 20),
             child: FadeTransition(
-              opacity: _animation, //Uso l'animazione definita in initState
+              opacity: _animation,
               child: Column(
                 children: [
                   Text(
                     AppLocalizations.of(context)!.translate('welcome_to').toUpperCase(),
                     style: TextStyle(
                       fontSize: 16,
-                      letterSpacing: 2.0, //Aumento lo spazio tra le lettere
+                      letterSpacing: 2.0,
                       fontWeight: FontWeight.w400,
                       color: Colors.black,
                     ),
@@ -103,7 +101,7 @@ class _LandingPageState extends State<LandingPage> with TickerProviderStateMixin
 
           //CAROUSEL VIEW
           SizedBox(
-            height: 400, // Altezza
+            height: 300,
             child: CarouselView(
               itemExtent: MediaQuery.of(context).size.width * 0.8, // Ogni foto occupa l'80% della larghezza
               shrinkExtent: 200,
@@ -115,7 +113,7 @@ class _LandingPageState extends State<LandingPage> with TickerProviderStateMixin
             ),
           ),
 
-          const Spacer(), //Spinge il bottone verso il basso
+          const Spacer(),
 
           //BOTTONE INIZIAMO
           Padding(
